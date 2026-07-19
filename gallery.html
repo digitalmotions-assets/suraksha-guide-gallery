@@ -1,118 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="sg-gallery">
 
-<head>
+    <!-- Title -->
+    <div class="sg-title-area">
+        <h1>Safety Image Gallery</h1>
+        <p>Fire Safety, CCTV, Security, PPE, First Aid and Training Images</p>
+    </div>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Search -->
+    <div class="sg-search">
+        <input
+            type="text"
+            id="sg-search"
+            placeholder="Search gallery..."
+            autocomplete="off">
+        <i class="bi bi-search"></i>
+    </div>
 
-<title>Suraksha Guide Gallery</title>
+    <!-- Categories -->
+    <div id="sg-categories" class="sg-categories">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+        <button class="sg-category active" data-category="All">All</button>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+        <button class="sg-category" data-category="Fire Safety">Fire Safety</button>
 
-<link rel="stylesheet" href="css/gallery.css">
+        <button class="sg-category" data-category="Security">Security</button>
 
-</head>
+        <button class="sg-category" data-category="CCTV">CCTV</button>
 
-<body>
+        <button class="sg-category" data-category="PPE">PPE</button>
 
-<div class="container-fluid py-4">
+        <button class="sg-category" data-category="First Aid">First Aid</button>
 
-<div class="row">
+        <button class="sg-category" data-category="Emergency">Emergency</button>
 
-<div class="col-lg-12">
+        <button class="sg-category" data-category="Access Control">Access Control</button>
 
-<h2 class="text-center fw-bold mb-4">
+    </div>
 
-Security Learning Gallery
+    <!-- Loader -->
+    <div id="sg-loader" class="sg-loader">
+        <div class="sg-spinner"></div>
+    </div>
 
-</h2>
+    <!-- Empty State -->
+    <div id="sg-empty" class="sg-empty" style="display:none;">
 
-</div>
+        <i class="bi bi-images"></i>
 
-</div>
+        <h3>No Images Found</h3>
 
-<div class="row">
+        <p>Please try another search or category.</p>
 
-<div class="col-lg-12">
+    </div>
 
-<div class="sg-search">
+    <!-- Gallery -->
+    <div id="sg-gallery" class="sg-grid"></div>
 
-<input
-id="gallerySearch"
-type="text"
-placeholder="Search Images...">
+    <!-- Load More -->
+    <div class="sg-loadmore">
 
-</div>
+        <button id="sg-load-more">
 
-</div>
+            Load More Images
 
-</div>
+        </button>
 
-<div class="row">
-
-<div class="col-lg-12">
-
-<div
-id="galleryCategories"
-class="sg-categories">
-
-</div>
-
-</div>
-
-</div>
-
-<div class="row">
-
-<div class="col-lg-12">
-
-<div
-id="galleryGrid"
-class="sg-grid">
+    </div>
 
 </div>
 
-</div>
+<!-- ===========================
+     MODAL
+=========================== -->
+
+<div id="sg-modal" class="sg-modal">
+
+    <div class="sg-modal-content">
+
+        <button class="sg-close">&times;</button>
+
+        <button class="sg-nav sg-prev">&#10094;</button>
+
+        <button class="sg-nav sg-next">&#10095;</button>
+
+        <img
+            class="sg-modal-image"
+            src=""
+            alt="">
+
+        <div class="sg-modal-body">
+
+            <h2 class="sg-modal-title"></h2>
+
+            <p class="sg-modal-desc"></p>
+
+            <div class="sg-modal-actions">
+
+                <button class="sg-btn sg-btn-primary">
+                    Read Guide
+                </button>
+
+                <button class="sg-btn sg-btn-success">
+                    Share
+                </button>
+
+                <button class="sg-btn sg-btn-light">
+                    Download
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="row mt-4">
+<!-- Toast -->
+<div class="sg-toast"></div>
 
-<div class="col-lg-12 text-center">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<button
-id="loadMoreBtn"
-class="btn btn-success btn-lg">
+<!-- Gallery CSS -->
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/gh/digitalmotions-assets/suraksha-guide/gallery/gallery.css">
 
-Load More
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="js/gallery.js"></script>
-
-<script src="js/gallery-modal.js"></script>
-
-<script src="js/gallery-search.js"></script>
-
-<script src="js/gallery-filter.js"></script>
-
-<script src="js/gallery-loadmore.js"></script>
-
-<script src="js/gallery-share.js"></script>
-
-<script src="js/gallery-bookmark.js"></script>
-
-</body>
-
-</html>
+<!-- Gallery JS -->
+<script src="https://cdn.jsdelivr.net/gh/digitalmotions-assets/suraksha-guide/gallery/gallery.js"></script>
