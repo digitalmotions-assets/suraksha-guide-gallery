@@ -1,0 +1,411 @@
+/* ==========================================================
+   Suraksha Guide Gallery
+   gallery.css
+   Version : 1.0
+========================================================== */
+
+/* ---------- Root ---------- */
+
+:root{
+    --primary:#0d6efd;
+    --success:#198754;
+    --danger:#dc3545;
+    --warning:#ffc107;
+    --dark:#212529;
+    --light:#f8f9fa;
+    --border:#e5e7eb;
+    --radius:14px;
+    --shadow:0 8px 24px rgba(0,0,0,.08);
+}
+
+/* ---------- Body ---------- */
+
+body{
+    background:#f5f7fb;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+
+/* ---------- Gallery Wrapper ---------- */
+
+.sg-gallery{
+    max-width:1400px;
+    margin:auto;
+    padding:25px 15px;
+}
+
+/* ---------- Masonry ---------- */
+
+.sg-grid{
+    column-count:4;
+    column-gap:18px;
+}
+
+@media(max-width:1200px){
+.sg-grid{
+column-count:3;
+}
+}
+
+@media(max-width:768px){
+.sg-grid{
+column-count:2;
+}
+}
+
+@media(max-width:576px){
+.sg-grid{
+column-count:1;
+}
+}
+
+/* ---------- Card ---------- */
+
+.sg-card{
+
+    break-inside:avoid;
+
+    background:#fff;
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+    margin-bottom:18px;
+
+    box-shadow:var(--shadow);
+
+    transition:.25s;
+
+    cursor:pointer;
+
+}
+
+.sg-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+/* ---------- Image ---------- */
+
+.sg-card img{
+
+width:100%;
+
+display:block;
+
+height:auto;
+
+transition:.4s;
+
+}
+
+.sg-card:hover img{
+
+transform:scale(1.04);
+
+}
+
+/* ---------- Badge ---------- */
+
+.sg-badge{
+
+position:absolute;
+
+top:12px;
+
+left:12px;
+
+background:var(--primary);
+
+color:#fff;
+
+padding:5px 12px;
+
+border-radius:50px;
+
+font-size:12px;
+
+font-weight:600;
+
+}
+
+/* ---------- Image Wrapper ---------- */
+
+.sg-image{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/* ---------- Card Body ---------- */
+
+.sg-body{
+
+padding:16px;
+
+}
+
+/* ---------- Title ---------- */
+
+.sg-title{
+
+font-size:18px;
+
+font-weight:700;
+
+margin-bottom:8px;
+
+color:#222;
+
+}
+
+/* ---------- Description ---------- */
+
+.sg-desc{
+
+font-size:14px;
+
+color:#666;
+
+line-height:1.6;
+
+}
+
+/* ---------- Footer ---------- */
+
+.sg-footer{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:14px 16px;
+
+border-top:1px solid var(--border);
+
+}
+
+/* ---------- Stats ---------- */
+
+.sg-stats{
+
+display:flex;
+
+gap:15px;
+
+font-size:13px;
+
+color:#666;
+
+}
+
+/* ---------- Buttons ---------- */
+
+.sg-btn{
+
+border:none;
+
+background:var(--primary);
+
+color:#fff;
+
+padding:8px 15px;
+
+border-radius:8px;
+
+font-size:14px;
+
+transition:.25s;
+
+}
+
+.sg-btn:hover{
+
+background:#084298;
+
+}
+
+/* ---------- Search ---------- */
+
+.sg-search{
+
+margin-bottom:25px;
+
+}
+
+.sg-search input{
+
+width:100%;
+
+padding:14px;
+
+border-radius:12px;
+
+border:1px solid #ddd;
+
+font-size:16px;
+
+}
+
+.sg-search input:focus{
+
+outline:none;
+
+border-color:var(--primary);
+
+box-shadow:0 0 0 3px rgba(13,110,253,.15);
+
+}
+
+/* ---------- Categories ---------- */
+
+.sg-categories{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+margin-bottom:25px;
+
+}
+
+.sg-category{
+
+padding:8px 18px;
+
+background:#fff;
+
+border-radius:50px;
+
+cursor:pointer;
+
+border:1px solid #ddd;
+
+transition:.25s;
+
+font-size:14px;
+
+}
+
+.sg-category:hover,
+
+.sg-category.active{
+
+background:var(--primary);
+
+color:#fff;
+
+}
+
+/* ---------- Load More ---------- */
+
+.sg-loadmore{
+
+text-align:center;
+
+margin:35px 0;
+
+}
+
+.sg-loadmore button{
+
+padding:14px 40px;
+
+border:none;
+
+background:var(--success);
+
+color:#fff;
+
+border-radius:50px;
+
+font-size:17px;
+
+font-weight:600;
+
+transition:.25s;
+
+}
+
+.sg-loadmore button:hover{
+
+background:#146c43;
+
+}
+
+/* ---------- Modal Image ---------- */
+
+.sg-modal img{
+
+width:100%;
+
+border-radius:12px;
+
+}
+
+/* ---------- Lazy Loading ---------- */
+
+img{
+
+max-width:100%;
+
+height:auto;
+
+}
+
+/* ---------- Animation ---------- */
+
+.sg-card{
+
+animation:fadeUp .5s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ---------- Scrollbar ---------- */
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#b5b5b5;
+
+border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#888;
+
+}
