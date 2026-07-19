@@ -735,3 +735,389 @@ document.addEventListener("DOMContentLoaded",()=>{
     bindModalEvents();
 
 });
+/* ==========================================================
+   SHARE
+==========================================================*/
+
+function shareItem(index){
+
+    const item = filteredData[index];
+
+    if(!item) return;
+
+    const shareData = {
+
+        title: item.title,
+
+        text: item.description,
+
+        url: item.article || window.location.href
+
+    };
+
+    if(navigator.share){
+
+        navigator.share(shareData)
+
+        .catch(()=>{});
+
+    }
+
+    else{
+
+        copyToClipboard(shareData.url);
+
+    }
+
+}
+
+/* ==========================================================
+   COPY LINK
+==========================================================*/
+
+function copyToClipboard(text){
+
+    navigator.clipboard.writeText(text)
+
+    .then(()=>{
+
+        showToast("Link copied successfully.");
+
+    })
+
+    .catch(()=>{
+
+        showToast("Unable to copy link.");
+
+    });
+
+}
+
+/* ==========================================================
+   DOWNLOAD IMAGE
+==========================================================*/
+
+function downloadImage(index){
+
+    const item = filteredData[index];
+
+    if(!item) return;
+
+    const link = document.createElement("a");
+
+    link.href = item.image || item.thumb;
+
+    link.download = item.title.replace(/\s+/g,"-") + ".jpg";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+}
+
+/* ==========================================================
+   BOOKMARK
+==========================================================*/
+
+const BOOKMARK_KEY = "sg_gallery_bookmarks";
+
+function getBookmarks(){
+
+    return JSON.parse(
+
+        localStorage.getItem(BOOKMARK_KEY) || "[]"
+
+    );
+
+}
+
+function saveBookmarks(data){
+
+    localStorage.setItem(
+
+        BOOKMARK_KEY,
+
+        JSON.stringify(data)
+
+    );
+
+}
+
+function toggleBookmark(index){
+
+    const item = filteredData[index];
+
+    if(!item) return;
+
+    let bookmarks = getBookmarks();
+
+    if(bookmarks.includes(item.id)){
+
+        bookmarks = bookmarks.filter(
+
+            id => id !== item.id
+
+        );
+
+        showToast("Bookmark removed.");
+
+    }
+
+    else{
+
+        bookmarks.push(item.id);
+
+        showToast("Bookmarked successfully.");
+
+    }
+
+    saveBookmarks(bookmarks);
+
+    updateBookmarkIcons();
+
+}
+
+function updateBookmarkIcons(){
+
+    const bookmarks = getBookmarks();
+
+    document
+
+    .querySelectorAll(".sg-bookmark")
+
+    .forEach((button,index)=>{
+
+        const item = filteredData[index];
+
+        if(!item) return;
+
+        button.classList.toggle(
+
+            "sg-bookmarked",
+
+            bookmarks.includes(item.id)
+
+        );
+
+    });
+
+}
+
+/* ==========================================================
+   VIEW COUNTER
+==========================================================*/
+
+function increaseView(index){
+
+    if(!filteredData[index]) return;
+
+    filteredData[index].views++;
+
+    renderGallery();
+
+}
+
+/* ==========================================================
+   TOAST
+==========================================================*/
+
+function showToast(message){
+
+    let toast = document.querySelector(".sg-toast");
+
+    if(!toast){
+
+        toast = document.createElement("div");
+
+        toast.className = "sg-toast";
+
+        document.body.appendChild(toast);
+
+    }
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+/* ==========================================================
+   BACK TO TOP
+==========================================================*/
+
+function createBackToTop(){
+
+    if(document.querySelector(".sg-top")) return;
+
+    const button = document.createElement("button");
+
+    button.className = "sg-top";
+
+    button.innerHTML = '<i class="bi bi-arrow-up"></i>';
+
+    document.body.appendChild(button);
+
+    button.addEventListener("click",()=>{
+
+        window.scrollTo({
+
+            top:0,
+
+            behavior:"smooth"
+
+        });
+
+    });
+
+}
+
+function updateBackToTop(){
+
+    const button = document.querySelector(".sg-top");
+
+    if(!button) return;
+
+    if(window.scrollY > 400){
+
+        button.classList.add("show");
+
+    }
+
+    else{
+
+        button.classList.remove("show");
+
+    }
+
+}
+
+window.addEventListener("scroll",updateBackToTop);
+
+/* ==========================================================
+   LAZY IMAGE OBSERVER
+==========================================================*/
+
+function initLazyLoading(){
+
+    const images = document.querySelectorAll("img[loading='lazy']");
+
+    if(!("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                const image = entry.target;
+
+                image.classList.add("loaded");
+
+                observer.unobserve(image);
+
+            }
+
+        });
+
+    },{
+
+        rootMargin:"100px"
+
+    });
+
+    images.forEach(image=>observer.observe(image));
+
+}
+
+/* ==========================================================
+   GLOBAL CLICK EVENTS
+==========================================================*/
+
+document.addEventListener("click",e=>{
+
+    const shareButton = e.target.closest(".sg-share");
+
+    if(shareButton){
+
+        const card = shareButton.closest(".sg-card");
+
+        if(card){
+
+            shareItem(card.dataset.index);
+
+        }
+
+    }
+
+    const bookmarkButton = e.target.closest(".sg-bookmark");
+
+    if(bookmarkButton){
+
+        const card = bookmarkButton.closest(".sg-card");
+
+        if(card){
+
+            toggleBookmark(card.dataset.index);
+
+        }
+
+    }
+
+});
+
+/* ==========================================================
+   CARD VIEW EVENT
+==========================================================*/
+
+document.addEventListener("click",e=>{
+
+    const viewButton = e.target.closest(".sg-view,.sg-open");
+
+    if(viewButton){
+
+        increaseView(viewButton.dataset.index);
+
+    }
+
+});
+
+/* ==========================================================
+   RELOAD UI
+==========================================================*/
+
+const originalRenderGallery = renderGallery;
+
+renderGallery = function(){
+
+    originalRenderGallery();
+
+    updateBookmarkIcons();
+
+    initLazyLoading();
+
+};
+
+/* ==========================================================
+   STARTUP
+==========================================================*/
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    createBackToTop();
+
+    updateBookmarkIcons();
+
+    initLazyLoading();
+
+});
+
+/* ==========================================================
+   END OF PART 5
+==========================================================*/
